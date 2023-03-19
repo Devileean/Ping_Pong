@@ -49,4 +49,76 @@ for i in range(25):
         table.down()
 
 table.hideturtle()
+
+# создаем ракетки
+
+# левая ракетка
+
+left_rocket = turtle.Turtle()
+left_rocket.color('white')  # цвет ракетки
+left_rocket.shape('square')  # создаем форму ракетки
+left_rocket.shapesize(stretch_wid=4.8, stretch_len=0.6)  # размер ракетки
+left_rocket.penup()
+left_rocket.goto(-470, 0)
+
+# правая ракетка
+
+right_rocket = turtle.Turtle()
+right_rocket.color('white')  # цвет ракетки
+right_rocket.shape('square')  # создаем форму ракетки
+right_rocket.shapesize(stretch_wid=4.8, stretch_len=0.6)  # размер ракетки
+right_rocket.penup()
+right_rocket.goto(470, 0)
+
+
+def move_up_left_rocket():
+    """
+    Метод движения вверх и условие которое не дает нам уйти за границы стола.
+    :return:
+    """
+    y = left_rocket.ycor() + 45
+    if y > 250:
+        y = 250
+    left_rocket.sety(y)
+
+
+def move_down_left_rocket():
+    """
+    Метод движения вниз и условие которое не дает нам уйти за границы стола.
+    :return:
+    """
+    y = left_rocket.ycor() - 45
+    if y < -250:
+        y = -250
+    left_rocket.sety(y)
+
+
+def move_up_right_rocket():
+    """
+    Метод движения вверх и условие которое не дает нам уйти за границы стола.
+    :return:
+    """
+    y = right_rocket.ycor() + 45
+    if y > 250:
+        y = 250
+    right_rocket.sety(y)
+
+
+def move_down_right_rocket():
+    """
+    Метод движения вниз и условие которое не дает нам уйти за границы стола.
+    :return:
+    """
+    y = right_rocket.ycor() - 45
+    if y < -250:
+        y = -250
+    right_rocket.sety(y)
+
+
+window.listen()  # позволит понимать окну нажатие некоторых кнопок
+window.onkeypress(move_up_left_rocket, 'w')
+window.onkeypress(move_down_left_rocket, 's')
+window.onkeypress(move_up_right_rocket, 'i')
+window.onkeypress(move_down_right_rocket, 'k')
+
 window.mainloop()  # чтобы наше окно сразу не закрывалось
