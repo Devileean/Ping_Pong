@@ -1,4 +1,5 @@
 import turtle
+from random import choice, randint
 
 window = turtle.Screen()  # создадим окно и положем в переменную window
 window.title('Ping-Pong')  # создадим заголовок нашего окна
@@ -11,7 +12,7 @@ table = turtle.Turtle()
 table.speed(0)  # скорость отрисовки стола
 table.color('#228B22')
 
-# отриcовываем стол по координатам
+# рисуем стол по координатам
 
 # сам стол
 table.begin_fill()
@@ -39,7 +40,7 @@ table.color('white')
 
 table.goto(0, 300)
 table.color('white')
-table.setheading(270)  # делает направление вниз (270 в turttle всегда вниз)
+table.setheading(270)  # делает направление вниз (270 в turtle всегда вниз)
 for i in range(25):
     if i % 2 == 0:
         table.forward(24)
@@ -73,7 +74,7 @@ right_rocket.goto(470, 0)
 
 def move_up_left_rocket():
     """
-    Метод движения вверх и условие которое не дает нам уйти за границы стола.
+    Метод движения вверх и условие, которое не дает нам уйти за границы стола.
     :return:
     """
     y = left_rocket.ycor() + 45
@@ -84,7 +85,7 @@ def move_up_left_rocket():
 
 def move_down_left_rocket():
     """
-    Метод движения вниз и условие которое не дает нам уйти за границы стола.
+    Метод движения вниз и условие, которое не дает нам уйти за границы стола.
     :return:
     """
     y = left_rocket.ycor() - 45
@@ -95,7 +96,7 @@ def move_down_left_rocket():
 
 def move_up_right_rocket():
     """
-    Метод движения вверх и условие которое не дает нам уйти за границы стола.
+    Метод движения вверх и условие, которое не дает нам уйти за границы стола.
     :return:
     """
     y = right_rocket.ycor() + 45
@@ -106,7 +107,7 @@ def move_up_right_rocket():
 
 def move_down_right_rocket():
     """
-    Метод движения вниз и условие которое не дает нам уйти за границы стола.
+    Метод движения вниз и условие, которое не дает нам уйти за границы стола.
     :return:
     """
     y = right_rocket.ycor() - 45
@@ -114,11 +115,42 @@ def move_down_right_rocket():
         y = -250
     right_rocket.sety(y)
 
+#  создаем шар
+
+ball = turtle.Turtle()
+ball.shape('circle')  # делаем форму шара круглой
+ball.color('white')  # цвет шара
+ball.speed(0)
+ball.dx = 3  # движение шара по x
+ball.dy = 3  # движение шара по y
+ball.penup()  # чтобы шар не оставлял след
 
 window.listen()  # позволит понимать окну нажатие некоторых кнопок
 window.onkeypress(move_up_left_rocket, 'w')
 window.onkeypress(move_down_left_rocket, 's')
 window.onkeypress(move_up_right_rocket, 'i')
 window.onkeypress(move_down_right_rocket, 'k')
+
+while True:  # бесконечный цикл движения нашего шарика
+    window.update()
+
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+
+    if ball.ycor() >= 290:  # условие дли отскока шарика от верхней стенки
+        ball.dy = -ball.dy
+
+    if ball.ycor() <= -290:  # условие дли отскока шарика от нижней стенки
+        ball.dy = -ball.dy
+
+    if ball.xcor() >= 490:  # условие при котором мяч возвращается в исходное положение стола в центре
+        ball.goto(0, randint(-150, 150))
+        ball.dx = choice([-4, -3, -2, 2, 3, 4])
+        ball.dy = choice([-4, -3, -2, 2, 3, 4])
+
+    if ball.xcor() <= -490:  # условие при котором мяч возвращается в исходное положение стола в центре
+        ball.goto(0, randint(-150, 150))
+        ball.dx = choice([-4, -3, -2, 2, 3, 4])
+        ball.dy = choice([-4, -3, -2, 2, 3, 4])
 
 window.mainloop()  # чтобы наше окно сразу не закрывалось
