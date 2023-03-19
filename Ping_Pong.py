@@ -5,6 +5,7 @@ window = turtle.Screen()  # создадим окно и положем в пе�
 window.title('Ping-Pong')  # создадим заголовок нашего окна
 window.setup(width=0.7, height=0.7)  # создадим размеры нашего окна
 window.bgcolor('#1A4780')  # цвет нашего фона окна
+window.tracer(2)
 
 # создаем стол
 
@@ -58,7 +59,7 @@ table.hideturtle()
 left_rocket = turtle.Turtle()
 left_rocket.color('white')  # цвет ракетки
 left_rocket.shape('square')  # создаем форму ракетки
-left_rocket.shapesize(stretch_wid=4.8, stretch_len=0.6)  # размер ракетки
+left_rocket.shapesize(stretch_len=0.6, stretch_wid=4.8)  # размер ракетки
 left_rocket.penup()
 left_rocket.goto(-470, 0)
 
@@ -67,7 +68,7 @@ left_rocket.goto(-470, 0)
 right_rocket = turtle.Turtle()
 right_rocket.color('white')  # цвет ракетки
 right_rocket.shape('square')  # создаем форму ракетки
-right_rocket.shapesize(stretch_wid=4.8, stretch_len=0.6)  # размер ракетки
+right_rocket.shapesize(stretch_len=0.6, stretch_wid=4.8)  # размер ракетки
 right_rocket.penup()
 right_rocket.goto(470, 0)
 
@@ -115,6 +116,7 @@ def move_down_right_rocket():
         y = -250
     right_rocket.sety(y)
 
+
 #  создаем шар
 
 ball = turtle.Turtle()
@@ -152,5 +154,18 @@ while True:  # бесконечный цикл движения нашего ш�
         ball.goto(0, randint(-150, 150))
         ball.dx = choice([-4, -3, -2, 2, 3, 4])
         ball.dy = choice([-4, -3, -2, 2, 3, 4])
+
+    # логика отбивания шарика ракеткой
+    # левая ракетка
+
+    if ball.ycor() >= left_rocket.ycor() - 50 and ball.ycor() <= left_rocket.ycor() + 50 \
+            and ball.xcor() >= left_rocket.xcor() - 5 and ball.xcor() <= left_rocket.xcor() + 5:
+        ball.dx = -ball.dx
+    # правая ракетка
+    if ball.ycor() >= right_rocket.ycor() - 50 and ball.ycor() <= right_rocket.ycor() + 50 \
+            and ball.xcor() >= right_rocket.xcor() - 5 and ball.xcor() <= right_rocket.xcor() + 5:
+        ball.dx = -ball.dx
+
+
 
 window.mainloop()  # чтобы наше окно сразу не закрывалось
